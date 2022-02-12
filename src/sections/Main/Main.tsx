@@ -2,7 +2,7 @@ import { useEffect, ChangeEvent, useState, BaseSyntheticEvent } from "react";
 
 import { useStore } from 'store';
 import { ActionTypesEnum } from 'store/types';
-import { getImages } from "actions";
+import { deleteImage, getImages } from "actions";
 import Photo from "components/Photo";
 import Pagination from "components/Pagination";
 
@@ -55,6 +55,17 @@ const Main = () => {
     e.stopPropagation();
   }
 
+  const deleteHandler = (id: number) => {
+    deleteImage(id).then(() => {
+      getImages(page, sorting).then(res => {
+        dispatch({
+          type: ActionTypesEnum.SET_PHOTOS,
+          payload: res,
+        });
+      });
+    });
+  }
+
   return <div>
       Sorting albumId By <select id="lang" onChange={changeSorting}>
         <option value="ASC">ASC</option>
@@ -62,7 +73,7 @@ const Main = () => {
       </select>
 
       <div className={styles.list}>
-        {photos && photos.map(photo => <Photo key={photo.id} {...photo} onClick={clickHandler} />)}
+        {photos && photos.map(photo => <Photo key={photo.id} {...photo} onClick={clickHandler} deleteAction={deleteHandler} />)}
       </div>
       <Pagination onChange={changePage} currentPage={page} />
       {

@@ -8,7 +8,11 @@ const useStyles = createUseStyles({
     height: 300,
     cursor: 'pointer',
   },
-  
+  delete: {
+    position: 'absolute',
+    background: 'red',
+    cursor: 'pointer',
+  }
 });
 
 export default useStyles;

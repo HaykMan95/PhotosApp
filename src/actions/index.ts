@@ -9,3 +9,9 @@ export const getImages = (page: number = 1, sorting: string = 'asc') => {
 export const getLatestItem = () => {
   return fetch(`${API_URL}?_start=0&_limit=1&_sort=id&_order=desc`).then(res => res.json());
 };
+
+export const deleteImage = (id: number) => {
+  return fetch(`${API_URL}/${id}`, {
+    method: 'DELETE',
+  });
+}
